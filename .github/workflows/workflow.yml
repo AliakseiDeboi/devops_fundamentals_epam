@@ -1,0 +1,25 @@
+name: workflow
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Test Angular App 
+    defaults:
+      run:
+        working-directory: ./lab_3
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - name: Install requirements
+      run: yarn install
+    - name: Run tests and collect coverage
+      run: yarn test:coverage
+    - name: Upload coverage reports to Codecov with GitHub Action
+    - uses: codecov/codecov-action@v3
+      with:
+        files: ./lab_3/coverage/lcon.info
+
